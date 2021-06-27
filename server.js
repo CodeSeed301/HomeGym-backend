@@ -6,11 +6,13 @@ app.use(cors());
 require('dotenv').config();
 app.use(express.json());
 const PORT = process.env.PORT;
+const EquipmentsController=require('./controller/equipments.controller')
+const ExercisesController=require('./controller/exercises.controller')
 
-app.get('/', 
- function (req, res) { 
-  res.send('Hello Hero\'s') 
+app.get('/',(req, res)=> {res.send('Hello Hero\'s')})
+app.get('/exercises', ExercisesController)
+app.get('/equipments', EquipmentsController)
+
+app.listen(PORT, () => {
+  console.log(`running on port ${PORT}`);
 })
-app.listen(PORT,()=>{
-    console.log(`running on port ${PORT}`);
-}) 
