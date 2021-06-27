@@ -1,19 +1,17 @@
-`use strict`
+`use strict`;
 
-const { request, response } = require('express')
-const {userModel} = require ('../models/user.model')
+const { userModel } = require("../models/user.model");
 
-const getEqupiment = (req , res) =>{
+const getEquipment = (req, res) => {
+    const { email } = req.query;
 
- const {email} = req.query;
+    userModel.findOne({ email: email }, (error, user) => {
+        if (error) {
+            res.send(error);
+        } else {
+            res.json(user);
+        }
+    });
+};
 
-userModel.findOne({email: email},(error,user)=>{
- if (error) {
-     res.send(error)
- } else {
-     res.json(user)
- }
-})
-}
-
-module.exports = getEqupiment ;
+module.exports = getEquipment;
