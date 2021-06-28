@@ -9,6 +9,10 @@ const getEquipment = (req, res) => {
         if (error) {
             res.send(error);
         } else {
+            if (user == null) {
+                user = new userModel({ email, equipment: [] });
+                user.save();
+            }
             res.json(user);
         }
     });
@@ -17,12 +21,13 @@ const getEquipment = (req, res) => {
 
 
 const creatEquipment = (request, response) => {
-    const { email, title: title, id: id, quantity: quantity } = request.body;
+    
+    const { email, title: title, id: id, quantity: quantity,price:price } = request.body;
     userModel.findOne({ email: email }, (error, userData) => {
         if (error) {
             response.send(error)
         } else {
-            userData.equipment.push({ title: title, id: id, quantity: quantity });
+            userData.equipment.push({ title: title, id: id, quantity: quantity,price:price });
             userData.save();
             response.json(userData);
         }
@@ -41,11 +46,8 @@ const deleteEquipment = (req, res) => {
             }
             else {
                 userData.equipment.splice(productIndex, 1);
-
-
                 userData.save();
-
-
+                console.log('delete',userData)
                 res.json(userData);
             }
         })
@@ -53,14 +55,16 @@ const deleteEquipment = (req, res) => {
 
 const updateEquipment=(request,response)=>{
     const productIndex = request.params.product_idx;
-    const { email, title: title, id: id, quantity: quantity } = request.body;
+    const { email, title: title, id: id, quantity: quantity,price:price } = request.body;
+    console.log(email, "title:" ,title, "id:", id, "quantity:", quantity,"price:",price)
     userModel.findOne({email :email} , (error,userData)=>{
         if(error){
             response.send(error);
         }
         else{
-            userData.equipment.splice(productIndex,1,{title: title, id: id, quantity: quantity});
+            userData.equipment.splice(productIndex,1,{title: title, id: id, quantity: quantity,price:price});
             userData.save();
+            console.log('update',userData)
             response.json(userData);        
         }
     })
