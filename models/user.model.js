@@ -12,7 +12,7 @@ const userModel = mongoose.model("users", userSchema);
 
 const seedUserData = () => {
     const userAseel = new userModel({
-        email: "archaseel.1992@gmail.com",
+        email: "mahmood.dinah2@gmail.com",
         equipment: [],
     });
     const userOsama = new userModel({
