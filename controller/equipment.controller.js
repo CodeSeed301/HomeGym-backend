@@ -51,6 +51,19 @@ const deleteEquipment = (req, res) => {
         })
 }
 
+const updateEquipment=(request,response)=>{
+    const productIndex = request.params.product_idx;
+    const { email, title: title, id: id, quantity: quantity } = request.body;
+    userModel.findOne({email :email} , (error,userData)=>{
+        if(error){
+            response.send(error);
+        }
+        else{
+            userData.equipment.splice(productIndex,1,{title: title, id: id, quantity: quantity});
+            userData.save();
+            response.json(userData);        
+        }
+    })
+}
 
-
-module.exports = { getEquipment, creatEquipment, deleteEquipment };
+module.exports = { getEquipment, creatEquipment, deleteEquipment,updateEquipment };
