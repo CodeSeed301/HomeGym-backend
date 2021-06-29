@@ -38,7 +38,21 @@ const creatEquipment = (request, response) => {
 const deleteEquipment = (req, res) => {
     const productIndex = req.params.product_idx;
     const { email } = req.query;
-    userModel.findOne(
+    if(productIndex==100){
+        userModel.findOne(
+            { email: email }, (error, userData) => {
+    
+                if (error) {
+                    res.send(error);
+                }
+                else {
+                    userData.equipment=[];
+                    userData.save();
+                    console.log('delete',userData)
+                    res.json(userData);
+                }
+            })
+    }else{userModel.findOne(
         { email: email }, (error, userData) => {
 
             if (error) {
@@ -50,7 +64,8 @@ const deleteEquipment = (req, res) => {
                 console.log('delete',userData)
                 res.json(userData);
             }
-        })
+        })}
+    
 }
 
 const updateEquipment=(request,response)=>{
