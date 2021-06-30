@@ -48,7 +48,6 @@ const deleteEquipment = (req, res) => {
                 else {
                     userData.equipment=[];
                     userData.save();
-                    console.log('delete',userData)
                     res.json(userData);
                 }
             })
@@ -61,7 +60,6 @@ const deleteEquipment = (req, res) => {
             else {
                 userData.equipment.splice(productIndex, 1);
                 userData.save();
-                console.log('delete',userData)
                 res.json(userData);
             }
         })}
@@ -71,7 +69,6 @@ const deleteEquipment = (req, res) => {
 const updateEquipment=(request,response)=>{
     const productIndex = request.params.product_idx;
     const { email, title: title, id: id, quantity: quantity,price:price } = request.body;
-    console.log(email, "title:" ,title, "id:", id, "quantity:", quantity,"price:",price)
     userModel.findOne({email :email} , (error,userData)=>{
         if(error){
             response.send(error);
@@ -79,7 +76,6 @@ const updateEquipment=(request,response)=>{
         else{
             userData.equipment.splice(productIndex,1,{title: title, id: id, quantity: quantity,price:price});
             userData.save();
-            console.log('update',userData)
             response.json(userData);        
         }
     })

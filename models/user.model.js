@@ -19,7 +19,6 @@ const seedUserData = () => {
         email: "osama.alali89@gmail.com",
         equipment: [],
     });
-    console.log(userAseel);
     userAseel.save();
     userOsama.save();
 };

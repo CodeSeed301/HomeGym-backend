@@ -10,23 +10,17 @@ const ExercisesController = (req, res) => {
     let equipmentId = req.query.equipmentId;
     if (!isNaN(equipmentId)) {
         if (cacheObj[equipmentId] && (Date.now() - cacheObj[equipmentId].timestamp < 86400000)) {
-            console.log('From the cache Object');
-            console.log('=====================');
             res.json(cacheObj[equipmentId].data);
         }
         else {
             axios.get(`https://wger.de/api/v2/exercise/?equipment=${equipmentId}&language=2`).then(response => {
                 if (response.data.results.length !== 0) {
                     let modeledExerciseData = response.data.results.slice(0, 4).map((obj,idx) => {
-                        console.log(exerciseImages[0][String(equipmentId)].imageUrl[idx]);
                         obj.image_url=exerciseImages[0][String(equipmentId)].imageUrl[idx]
 
 
                         return (new ExerciseModel(obj))
                     })
-                    console.log('From the axios request');
-                    console.log('=====================');
-                    
                     cacheObj[equipmentId] = { data: modeledExerciseData };
                     cacheObj[equipmentId].timestamp = Date.now();
                     res.send(modeledExerciseData)
