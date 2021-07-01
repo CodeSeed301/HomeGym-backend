@@ -15,8 +15,8 @@ const { getEquipment
       updateEquipment
     } = require("./controller/equipment.controller");
 const { seedUserData} = require("./models/user.model");
-
-mongoose.connect("mongodb://localhost:27017/homegym", { useNewUrlParser: true, useUnifiedTopology: true });
+//"mongodb://localhost:27017/homegym"
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 ////// end Server
 //  seedUserData()
 
