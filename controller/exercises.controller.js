@@ -13,7 +13,7 @@ const ExercisesController = (req, res) => {
             res.json(cacheObj[equipmentId].data);
         }
         else {
-            axios.get(`https://wger.de/api/v2/exercise/?equipment=${equipmentId}&language=2`).then(response => {
+            axios.get(`${process.env.API_URL}/exercise/?equipment=${equipmentId}&language=2`).then(response => {
                 if (response.data.results.length !== 0) {
                     let modeledExerciseData = response.data.results.slice(0, 4).map((obj,idx) => {
                         obj.image_url=exerciseImages[0][String(equipmentId)].imageUrl[idx]
